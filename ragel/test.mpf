@@ -1,0 +1,21 @@
+file {
+  "/tmp/x":
+    source => "puppet:///modules/foo/bar/baz",
+    owner => "root";
+  foo:
+    source => "puppet:///modules/foo/bar/baz",
+    bar => "baz",
+    ensure => present;
+}
+
+file {
+  "foo": ;
+}
+
+pants {
+  "foo": 
+    fizzle => 33;
+}
+
+Foo["test"] -> Foo["foo"]
+Foo["test"] <- Foo["foo"]

@@ -1,0 +1,5 @@
+Usage -
+
+ragel -R mpf.rl
+
+ruby mpf.rb test.mpf
