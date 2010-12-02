@@ -1,0 +1,19 @@
+<statement> ::=   <resource> | <edge>
+
+<resource>  ::= <type> "{" <name> ":" <parameters> <optional_comma> "}"
+
+<type>      ::= <!-- regex to define type form? -->
+
+<parameters> ::= <nothing> | <parameter> | <parameter> "," <parameter>
+
+<parameter> ::= <name> "=>" <string>
+
+<optional_comma> ::= <nothing> | ","
+
+<string>    ::= <naked_string> | <quoted_string>
+
+<edge>      ::= <reference> <arrow> <reference>
+
+<reference> ::= <uc_name> "[" <string> "]"
+
+<arrow>     ::= "->" | "<-" | "~>" | "<~"
