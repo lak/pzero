@@ -8,6 +8,7 @@ require "awesome_print"
     puts "OK"
   }
 
+<<<<<<< HEAD
   action mark {
     @tokenstack.push(p)
     #puts "Mark: #{self.line(string, p)}##{self.column(string, p)}"
@@ -101,10 +102,41 @@ require "awesome_print"
             # Compute line and column of the cursor (p)
             puts "Error at line #{self.line(string, p)}, column #{self.column(string, p)}: #{string[p .. -1].inspect}"
           } ;
+=======
+  ws = ([ \t\n])* ;
+  arrow = "->" | "<-" | "~>" | "<~" ;
+  uppercase_name = [A-Z][A-Za-z0-9:]* ;
+  quoted_string = "\"" ( (any - "\"") | "\\" any)* "\"" |
+                  "'" ( (any - "'") | "\\" any)* "'" ;
+  #naked_string = alnum+ ;
+  naked_string = [A-Za-z0-9:+\-\[\]] ;
+  string = quoted_string | naked_string ;
+  type_name = [A-Za-z0-9_:]+ ;
+  param_name = [A-Za-z0-9_]+ ;
+  param_value = string ;
+
+  parameter = param_name ws "=>" ws param_value
+  parameters = parameter ( ws "," ws parameter )* ;
+
+  reference = uppercase_name "[" string "]" ;
+  edge = reference ws arrow ws reference ;
+  name = [A-Za-z0-9]+ ;
+  
+  resource_entry = name ws ":" ws parameters ws ";" ;
+  resource_entries = resource_entry ( ws resource_entry )* ;
+
+  resource = type_name ws "{" ws resource_entries ws "}" > foo ;
+  statement = (ws (resource | edge) )+ ;
+
+  main := ( statement )
+          0 @{ puts "Failed" }
+          $err { puts "Error" } ;
+>>>>>>> cd844b7... - Add basics of an MPF ragel parser. Currently violates lak's mpf.bnf,
 }%%
 
 class MPF
   attr_accessor :eof
+<<<<<<< HEAD
 
   def initialize
     # BEGIN RAGEL DATA
@@ -151,12 +183,35 @@ class MPF
 
   def column(str, pos)
     return str[0 .. pos].split("\n").last.length
+=======
+  def parse(string)
+    %% write data;
+
+    data = string.unpack("c*")
+
+    %% write init;
+    %% write exec;
+>>>>>>> cd844b7... - Add basics of an MPF ragel parser. Currently violates lak's mpf.bnf,
   end
 
 end # class MPF
 
 def parse(string)
+<<<<<<< HEAD
   puts "result %s" % MPF.new.parse(string)
 end
 
 parse(File.open(ARGV[0]).read)
+=======
+  MPF.new.parse(string)
+end
+
+parse("
+  foo { 
+    test: 
+      fizzle => 'bar'; 
+    foo:
+      bar => 'baz';
+  }
+")
+>>>>>>> cd844b7... - Add basics of an MPF ragel parser. Currently violates lak's mpf.bnf,
